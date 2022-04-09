@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using CDRMonitorig.Domain;
+using CDRMonitorig.Infrastructure;
+
+ICallDetailsRepository repository = new SampleRepository();
+InformationService service = new InformationService(repository);
+
+var result = await service.GetTotalInfo();
+
+Console.WriteLine(result.ToString());

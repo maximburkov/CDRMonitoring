@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,5 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CDRMonitorig.Domain\CDRMonitorig.Domain.csproj" />
+    <ProjectReference Include="..\CDRMonitorig.Infrastructure\CDRMonitorig.Infrastructure.csproj" />
+  </ItemGroup>
 
 </Project>
