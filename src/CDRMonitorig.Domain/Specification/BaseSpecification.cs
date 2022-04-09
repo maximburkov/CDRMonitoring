@@ -1,12 +1,14 @@
-﻿namespace CDRMonitorig.Domain.Specification
+﻿using System.Linq.Expressions;
+
+namespace CDRMonitorig.Domain.Specification
 {
     public class BaseSpecification<T> : ISpecification<T>
     {
-        public BaseSpecification(Func<T, bool> isSatisfiedBy)
+        public BaseSpecification(Expression<Func<T, bool>> isSatisfiedBy)
         {
             IsSatisfiedBy = isSatisfiedBy;
         }
 
-        public Func<T, bool> IsSatisfiedBy { get; private set; }
+        public Expression<Func<T, bool>> IsSatisfiedBy { get; private set; }
     }
 }

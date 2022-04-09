@@ -13,5 +13,10 @@
         {
             return await _repository.GetTotalInfo();
         }
+
+        //public async Task<TotalInformation> GetTotalInfo()
+        //{
+        //    return await _repository.GetTotalInfo();
+        //}
     }
 }

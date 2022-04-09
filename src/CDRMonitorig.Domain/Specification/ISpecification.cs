@@ -1,7 +1,9 @@
-﻿namespace CDRMonitorig.Domain
+﻿using System.Linq.Expressions;
+
+namespace CDRMonitorig.Domain
 {
-    public interface ISpecification<in T>
+    public interface ISpecification<T>
     {
-        Func<T, bool> IsSatisfiedBy { get; }
+        Expression<Func<T, bool>> IsSatisfiedBy { get; }
     }
 }
