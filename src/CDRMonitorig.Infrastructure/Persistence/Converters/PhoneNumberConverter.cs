@@ -3,7 +3,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
 
-namespace CDRMonitorig.Infrastructure.Persistence.Maps
+namespace CDRMonitorig.Infrastructure.Persistence.Converters
 {
     public class PhoneNumberConverter : DefaultTypeConverter
     {

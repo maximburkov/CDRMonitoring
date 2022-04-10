@@ -1,4 +1,5 @@
 ﻿using CDRMonitorig.Domain;
+using CDRMonitorig.Domain.Entities;
 using CDRMonitorig.Domain.ValueObjects;
 
 namespace CDRMonitorig.Infrastructure
@@ -46,13 +47,13 @@ namespace CDRMonitorig.Infrastructure
             return Task.FromResult(_calls);
         }
 
-        public Task<TotalInformation> GetTotalInfo()
+        public Task<TotalInformation> GetTotalInformation()
         {
             return Task.FromResult(new TotalInformation
             {
                 Cost = 5,
                 Count = 10,
-                Minutes = 60
+                Duration = TimeSpan.FromHours(1)
             });
         }
 

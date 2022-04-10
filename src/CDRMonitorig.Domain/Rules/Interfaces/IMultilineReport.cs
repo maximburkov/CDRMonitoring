@@ -1,4 +1,4 @@
-﻿namespace CDRMonitorig.Domain.Rules
+﻿namespace CDRMonitorig.Domain.Rules.Interfaces
 {
     public interface IMultilineReport<T> : IReport
     {

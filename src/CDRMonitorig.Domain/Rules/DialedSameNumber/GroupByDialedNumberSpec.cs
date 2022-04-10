@@ -1,4 +1,5 @@
-﻿using CDRMonitorig.Domain.Specification;
+﻿using CDRMonitorig.Domain.Entities;
+using CDRMonitorig.Domain.Specification;
 
 namespace CDRMonitorig.Domain.Rules.DialedSameNumber
 {

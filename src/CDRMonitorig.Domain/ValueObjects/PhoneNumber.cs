@@ -8,9 +8,10 @@
         }
 
         // TODO: add validation
-        public string Number { get; set; }
+        public string Number { get; }
 
         public static PhoneNumber From(string number) => new (number);
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Number;

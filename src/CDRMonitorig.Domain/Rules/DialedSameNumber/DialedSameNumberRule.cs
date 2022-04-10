@@ -1,18 +1,14 @@
-﻿namespace CDRMonitorig.Domain.Rules.DialedSameNumber
+﻿using CDRMonitorig.Domain.Rules.Interfaces;
+
+namespace CDRMonitorig.Domain.Rules.DialedSameNumber
 {
     public class DialedSameNumberRule : IRule<DialedSameNumberReport>
     {
         private const int Threshold = 5;
-        private readonly ICallDetailsRepository _repository;
 
-        public DialedSameNumberRule(ICallDetailsRepository repository)
+        public async Task<DialedSameNumberReport> Apply(ICallDetailsRepository repository)
         {
-            _repository = repository;
-        }
-
-        public async Task<DialedSameNumberReport> Apply()
-        {
-            var calls = await _repository.GetCallsBySpec(new GroupByDialedNumberSpec(Threshold));
+            var calls = await repository.GetCallsBySpec(new GroupByDialedNumberSpec(Threshold));
 
             var records = calls.GroupBy(c => c.Dialed)
                 .Select(group => new DialedSameNumberReportItem

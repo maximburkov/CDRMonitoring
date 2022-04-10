@@ -3,6 +3,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
 using System.Text;
+using CDRMonitorig.Domain.Entities;
 using CDRMonitorig.Infrastructure.Persistence.Maps;
 
 namespace CDRMonitorig.Infrastructure.Persistence
@@ -13,7 +14,7 @@ namespace CDRMonitorig.Infrastructure.Persistence
         private List<Call>? _cachedValues = null;
         private readonly string _filename;
 
-        private readonly CsvConfiguration _configuration = new CsvConfiguration(CultureInfo.InvariantCulture)
+        private readonly CsvConfiguration _configuration = new(CultureInfo.InvariantCulture)
         {
             Encoding = Encoding.UTF8, 
             Delimiter = "," 
@@ -45,14 +46,13 @@ namespace CDRMonitorig.Infrastructure.Persistence
                 //TODO: handle csv exceptions.
             }
 
-
             if(_useCache)
                 _cachedValues = calls;
 
             return calls;
         }
 
-        public Task<TotalInformation> GetTotalInfo()
+        public Task<TotalInformation> GetTotalInformation()
         {
             throw new NotImplementedException();
         }

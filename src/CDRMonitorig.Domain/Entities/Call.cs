@@ -1,6 +1,6 @@
 ﻿using CDRMonitorig.Domain.ValueObjects;
 
-namespace CDRMonitorig.Domain
+namespace CDRMonitorig.Domain.Entities
 {
     public class Call
     {
@@ -11,5 +11,7 @@ namespace CDRMonitorig.Domain
         public PhoneNumber Caller { get; set; }
 
         public decimal SalesPrice { get; set; }
+
+        public TimeSpan Duration { get; set; }
     }
 }

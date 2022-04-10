@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cocona" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CDRMonitorig.Domain\CDRMonitorig.Domain.csproj" />
     <ProjectReference Include="..\CDRMonitorig.Infrastructure\CDRMonitorig.Infrastructure.csproj" />
   </ItemGroup>

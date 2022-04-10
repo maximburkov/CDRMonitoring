@@ -1,4 +1,5 @@
-﻿using CDRMonitorig.Domain.ValueObjects;
+﻿using CDRMonitorig.Domain.Rules.Interfaces;
+using CDRMonitorig.Domain.ValueObjects;
 
 namespace CDRMonitorig.Domain.Rules.FromSameCaller
 {
