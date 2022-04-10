@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CDRMonitorig.Domain\CDRMonitorig.Domain.csproj" />
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\" />
+    <ProjectReference Include="..\CDRMonitorig.Domain\CDRMonitorig.Domain.csproj" />
   </ItemGroup>
 
 </Project>

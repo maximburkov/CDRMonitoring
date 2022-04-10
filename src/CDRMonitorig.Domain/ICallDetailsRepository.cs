@@ -2,8 +2,10 @@
 {
     public interface ICallDetailsRepository
     {
+        Task<IEnumerable<Call>> GetAll();
+
         Task<TotalInformation> GetTotalInfo();
 
-        Task<Call> GetCallBySpec(ISpecification<Call> specification);
+        Task<IEnumerable<Call>> GetCallsBySpec(ISpecification<Call> specification);
     }
 }

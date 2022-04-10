@@ -1,6 +1,6 @@
 ﻿namespace CDRMonitorig.Domain.ValueObjects
 {
-    public class PhoneNumber
+    public class PhoneNumber : ValueObject
     {
         private PhoneNumber(string number)
         {
@@ -10,6 +10,10 @@
         // TODO: add validation
         public string Number { get; set; }
 
-        public static PhoneNumber From(string number) => new PhoneNumber(number);
+        public static PhoneNumber From(string number) => new (number);
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Number;
+        }
     }
 }

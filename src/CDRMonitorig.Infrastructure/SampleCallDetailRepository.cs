@@ -3,9 +3,12 @@ using CDRMonitorig.Domain.ValueObjects;
 
 namespace CDRMonitorig.Infrastructure
 {
-    public class SampleRepository : ICallDetailsRepository
+    /// <summary>
+    /// In memory repository with sample data.
+    /// </summary>
+    public class SampleCallDetailRepository : ICallDetailsRepository
     {
-        private readonly Call[] _calls = new[]
+        private readonly IEnumerable<Call> _calls = new[]
         {
             new Call
             {
@@ -38,6 +41,11 @@ namespace CDRMonitorig.Infrastructure
         };
 
 
+        public Task<IEnumerable<Call>> GetAll()
+        {
+            return Task.FromResult(_calls);
+        }
+
         public Task<TotalInformation> GetTotalInfo()
         {
             return Task.FromResult(new TotalInformation
@@ -48,11 +56,28 @@ namespace CDRMonitorig.Infrastructure
             });
         }
 
-        //public Task<>
-
-        public Task<Call> GetCallBySpec(ISpecification<Call> specification)
+        public Task<IEnumerable<Call>> GetCallsBySpec(ISpecification<Call> specification)
         {
-            throw new NotImplementedException();
+            var result = _calls;
+
+            if (specification.IsSatisfiedBy != null)
+            {
+                result = result.Where(specification.IsSatisfiedBy.Compile());
+            }
+
+            if (specification.GroupBy != null)
+            {
+                var groups = result.GroupBy(specification.GroupBy.Compile());
+
+                if (specification.HavingCount != null)
+                {
+                    groups = groups.Where(g => g.Count() >= specification.HavingCount);
+                }
+
+                result = groups.SelectMany(i => i);
+            }
+
+            return Task.FromResult(result);
         }
     }
 }
