@@ -10,20 +10,19 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = CoconaApp.CreateBuilder();
 
 
-builder.Services.AddScoped<CsvCallDetailsRepository>();
-builder.Services.AddScoped<ICallDetailsRepository>(x => x.GetRequiredService<CsvCallDetailsRepository>());
-builder.Services.AddScoped<IFileObserver>(x => x.GetRequiredService<CsvCallDetailsRepository>());
-builder.Services.AddScoped<CallDetailsService>();
+builder.Services.AddScoped<ICallDetailsRepository, CsvCallDetailsRepository>();
+builder.Services.AddSingleton<CallDetailsService>();
+builder.Services.AddSingleton<FileService>();
 
 var app = builder.Build();
 
 
 app.AddCommand("info", async ([Argument]string filename, 
     CallDetailsService callDetailsService, 
-    IFileObserver fileObserver) =>
+    FileService fileService) =>
 {
-    fileObserver.OnFileChanged(filename);
-    
+    fileService.Filename = filename;
+
     var info = await callDetailsService.GetTotalInformation();
 
     Console.WriteLine($"Calls: {info.Count}");
@@ -35,9 +34,9 @@ app.AddSubCommand("check", x =>
 {
     x.AddCommand("DialedSameNumber", async ([Argument] string filename, 
         CallDetailsService callDetailsService,
-        IFileObserver fileObserver) =>
+        FileService fileService) =>
     {
-        fileObserver.OnFileChanged(filename);
+        fileService.Filename = filename;
 
         var rule = new DialedSameNumberRule();
         var report = await callDetailsService.GetReportForRule(rule);
@@ -46,9 +45,9 @@ app.AddSubCommand("check", x =>
 
     x.AddCommand("FromSameNumber", async ([Argument] string filename, 
         CallDetailsService callDetailsService,
-        IFileObserver fileObserver) =>
+        FileService fileService) =>
     {
-        fileObserver.OnFileChanged(filename);
+        fileService.Filename = filename;
 
         var rule = new FromSameCallerRule();
         var report = await callDetailsService.GetReportForRule(rule);

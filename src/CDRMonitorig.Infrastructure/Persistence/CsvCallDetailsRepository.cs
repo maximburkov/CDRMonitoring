@@ -8,12 +8,12 @@ using System.Text;
 
 namespace CDRMonitorig.Infrastructure.Persistence
 {
-    public class CsvCallDetailsRepository : ICallDetailsRepository, IFileObserver
+    public class CsvCallDetailsRepository : ICallDetailsRepository
     {
         private readonly bool _useCache;
         private bool _isCacheActual = false;
         private List<Call>? _cachedValues = null;
-        private string? _filename;
+        private readonly FileService _fileService;
 
         private readonly CsvConfiguration _configuration = new(CultureInfo.InvariantCulture)
         {
@@ -21,9 +21,10 @@ namespace CDRMonitorig.Infrastructure.Persistence
             Delimiter = "," 
         };
 
-        public CsvCallDetailsRepository(bool useCache = true)
+        public CsvCallDetailsRepository(FileService fileService, bool useCache = true)
         {
             _useCache = useCache;
+            _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
         }
 
 
@@ -31,13 +32,15 @@ namespace CDRMonitorig.Infrastructure.Persistence
         {
             if (_isCacheActual && _cachedValues != null) return _cachedValues;
 
-            if (_filename is null) throw new Exception("Source file should be initialized before using repository.");
+            string? filename = _fileService.Filename;
+
+            if (filename is null) throw new Exception("Source file should be initialized before using repository.");
 
             List<Call> calls = new();
 
             try
             {
-                await using var fs = File.Open(_filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+                await using var fs = File.Open(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
                 using var textReader = new StreamReader(fs, Encoding.UTF8);
                 using var csv = new CsvReader(textReader, _configuration);
                 csv.Context.RegisterClassMap<CallByNameMap>();
@@ -85,12 +88,6 @@ namespace CDRMonitorig.Infrastructure.Persistence
             }
 
             return calls;
-        }
-
-        public void OnFileChanged(string filename)
-        {
-            _filename = filename;
-            _isCacheActual = false;
         }
     }
 }

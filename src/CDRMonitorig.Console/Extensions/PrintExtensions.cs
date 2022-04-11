@@ -11,7 +11,6 @@ namespace CDRMonitorig.Console.Extensions
 
             foreach (var item in report.Items)
             {
-                //System.Console.WriteLine(item);
                 sb.AppendLine(item?.ToString());
                 sb.AppendLine();
             }
