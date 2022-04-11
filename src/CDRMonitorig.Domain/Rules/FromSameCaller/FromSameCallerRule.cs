@@ -3,7 +3,7 @@ using CDRMonitorig.Domain.Rules.Interfaces;
 
 namespace CDRMonitorig.Domain.Rules.FromSameCaller
 {
-    internal class FromSameCallerRule : IRule<FromSameCallerReport>
+    public class FromSameCallerRule : IRule<FromSameCallerReport>
     {
         private const int Threshold = 5;
 

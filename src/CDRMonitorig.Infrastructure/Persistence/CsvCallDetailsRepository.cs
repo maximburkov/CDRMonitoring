@@ -1,18 +1,19 @@
 ﻿using CDRMonitorig.Domain;
+using CDRMonitorig.Domain.Entities;
+using CDRMonitorig.Infrastructure.Persistence.Maps;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
 using System.Text;
-using CDRMonitorig.Domain.Entities;
-using CDRMonitorig.Infrastructure.Persistence.Maps;
 
 namespace CDRMonitorig.Infrastructure.Persistence
 {
-    public class CsvCallDetailsRepository : ICallDetailsRepository
+    public class CsvCallDetailsRepository : ICallDetailsRepository, IFileObserver
     {
         private readonly bool _useCache;
+        private bool _isCacheActual = false;
         private List<Call>? _cachedValues = null;
-        private readonly string _filename;
+        private string? _filename;
 
         private readonly CsvConfiguration _configuration = new(CultureInfo.InvariantCulture)
         {
@@ -20,16 +21,17 @@ namespace CDRMonitorig.Infrastructure.Persistence
             Delimiter = "," 
         };
 
-        public CsvCallDetailsRepository(string filename, bool useCache = true)
+        public CsvCallDetailsRepository(bool useCache = true)
         {
             _useCache = useCache;
-            _filename = filename;
         }
 
 
         public async Task<IEnumerable<Call>> GetAll()
         {
-            if (_useCache && _cachedValues != null) return _cachedValues;
+            if (_isCacheActual && _cachedValues != null) return _cachedValues;
+
+            if (_filename is null) throw new Exception("Source file should be initialized before using repository.");
 
             List<Call> calls = new();
 
@@ -46,8 +48,12 @@ namespace CDRMonitorig.Infrastructure.Persistence
                 //TODO: handle csv exceptions.
             }
 
-            if(_useCache)
+            if (_useCache)
+            {
+                // TODO: need to test in concurrent scenarios.
                 _cachedValues = calls;
+                _isCacheActual = true;
+            }
 
             return calls;
         }
@@ -79,6 +85,12 @@ namespace CDRMonitorig.Infrastructure.Persistence
             }
 
             return calls;
+        }
+
+        public void OnFileChanged(string filename)
+        {
+            _filename = filename;
+            _isCacheActual = false;
         }
     }
 }

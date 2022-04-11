@@ -16,5 +16,7 @@
         {
             yield return Number;
         }
+
+        public override string ToString() => Number;
     }
 }

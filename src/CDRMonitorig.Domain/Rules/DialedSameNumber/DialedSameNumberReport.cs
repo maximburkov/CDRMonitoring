@@ -15,10 +15,13 @@ namespace CDRMonitorig.Domain.Rules.DialedSameNumber
 
     public class DialedSameNumberReportItem
     {
-        public PhoneNumber Number { get; set; }
+        public PhoneNumber? Number { get; set; }
 
         public int Count { get; set; }
 
         public decimal Cost { get; set; }
+
+        public override string ToString() =>
+            $"Number Dialed: {Number}\nCall count: {Count}\nCall cost: {Math.Round(Cost, 2)}";
     }
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CDRMonitorig.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "info \"C:\\Users\\Maxim\\Desktop\\Test task\\FZG_Daily_Calls_LiquidEleven_07042022_34422405_9201_SIP_V3.csv\""
+    }
+  }
+}

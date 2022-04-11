@@ -1,35 +1,59 @@
-﻿using CDRMonitorig.Domain;
+﻿using CDRMonitorig.Console.Extensions;
+using CDRMonitorig.Domain;
 using CDRMonitorig.Domain.Rules.DialedSameNumber;
-using CDRMonitorig.Domain.Rules.Interfaces;
+using CDRMonitorig.Domain.Rules.FromSameCaller;
 using CDRMonitorig.Infrastructure.Persistence;
 using Cocona;
 using Microsoft.Extensions.DependencyInjection;
 
-//ICallDetailsRepository repository = new CsvCallDetailsRepository("C:\\Users\\Maxim\\Desktop\\Test task\\FZG_Daily_Calls_LiquidEleven_07042022_34422405_9201_SIP_V3.csv");
-////InformationService service = new InformationService(repository);
-
-//CallDetailsService callDetails = new CallDetailsService(repository);
-
-//IRule<DialedSameNumberReport> rule = new DialedSameNumberRule();
-
-//var result = await callDetails.GetReportForRule(rule);
-
-//var info = await callDetails.GetTotalInformation();
-
-//Console.WriteLine(result.ToString());
 
 var builder = CoconaApp.CreateBuilder();
 
+
+builder.Services.AddScoped<CsvCallDetailsRepository>();
+builder.Services.AddScoped<ICallDetailsRepository>(x => x.GetRequiredService<CsvCallDetailsRepository>());
+builder.Services.AddScoped<IFileObserver>(x => x.GetRequiredService<CsvCallDetailsRepository>());
+builder.Services.AddScoped<CallDetailsService>();
+
 var app = builder.Build();
 
-app.AddCommand("test", () =>
+
+app.AddCommand("info", async ([Argument]string filename, 
+    CallDetailsService callDetailsService, 
+    IFileObserver fileObserver) =>
 {
-    Console.WriteLine("test Command");
+    fileObserver.OnFileChanged(filename);
+    
+    var info = await callDetailsService.GetTotalInformation();
+
+    Console.WriteLine($"Calls: {info.Count}");
+    Console.WriteLine($"Duration: {info.Duration.TotalMinutes}");
+    Console.WriteLine($"Cost: {Math.Round(info.Cost, 2)}");
 });
 
-app.AddCommand("run", () =>
+app.AddSubCommand("check", x =>
 {
-    Console.WriteLine("Run command");
+    x.AddCommand("DialedSameNumber", async ([Argument] string filename, 
+        CallDetailsService callDetailsService,
+        IFileObserver fileObserver) =>
+    {
+        fileObserver.OnFileChanged(filename);
+
+        var rule = new DialedSameNumberRule();
+        var report = await callDetailsService.GetReportForRule(rule);
+        report.ToConsoleOutput();
+    });
+
+    x.AddCommand("FromSameNumber", async ([Argument] string filename, 
+        CallDetailsService callDetailsService,
+        IFileObserver fileObserver) =>
+    {
+        fileObserver.OnFileChanged(filename);
+
+        var rule = new FromSameCallerRule();
+        var report = await callDetailsService.GetReportForRule(rule);
+        report.ToConsoleOutput();
+    });
 });
 
 app.Run();
