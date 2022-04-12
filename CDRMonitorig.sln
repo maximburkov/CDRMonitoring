@@ -15,8 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDRMonitoring.Domain.Tests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDRMonitorig.Infrastructure", "src\CDRMonitorig.Infrastructure\CDRMonitorig.Infrastructure.csproj", "{3210865E-8CEE-4AE8-96F9-6BAC11183E45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDRMonitorig.Web", "src\CDRMonitorig.Web\CDRMonitorig.Web.csproj", "{FECD6CB7-F9DF-47CE-B751-045AEEC26DBE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,10 +37,6 @@ Global
 		{3210865E-8CEE-4AE8-96F9-6BAC11183E45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3210865E-8CEE-4AE8-96F9-6BAC11183E45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3210865E-8CEE-4AE8-96F9-6BAC11183E45}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FECD6CB7-F9DF-47CE-B751-045AEEC26DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FECD6CB7-F9DF-47CE-B751-045AEEC26DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FECD6CB7-F9DF-47CE-B751-045AEEC26DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FECD6CB7-F9DF-47CE-B751-045AEEC26DBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,7 +46,6 @@ Global
 		{99EF2866-A665-420A-80CB-D7816CCA3D3B} = {16DA43C3-F79B-4E2C-A877-4F9F4E482F9A}
 		{97FCD787-7398-42D5-96E3-3F45BB4865CF} = {87C63E26-9BA5-4852-AA85-0AFBD5345529}
 		{3210865E-8CEE-4AE8-96F9-6BAC11183E45} = {16DA43C3-F79B-4E2C-A877-4F9F4E482F9A}
-		{FECD6CB7-F9DF-47CE-B751-045AEEC26DBE} = {16DA43C3-F79B-4E2C-A877-4F9F4E482F9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E8B8919-FEEC-42AC-B45F-2DA4D310E53B}

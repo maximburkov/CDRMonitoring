@@ -1,5 +1,4 @@
-﻿using CDRMonitorig.Domain;
-using CDRMonitorig.Domain.Entities;
+﻿using CDRMonitorig.Domain.Entities;
 using CDRMonitorig.Infrastructure.Persistence.Converters;
 using CsvHelper.Configuration;
 

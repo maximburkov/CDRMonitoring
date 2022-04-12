@@ -41,20 +41,9 @@ namespace CDRMonitorig.Infrastructure
             }
         };
 
-
         public Task<IEnumerable<Call>> GetAll()
         {
             return Task.FromResult(_calls);
-        }
-
-        public Task<TotalInformation> GetTotalInformation()
-        {
-            return Task.FromResult(new TotalInformation
-            {
-                Cost = 5,
-                Count = 10,
-                Duration = TimeSpan.FromHours(1)
-            });
         }
 
         public Task<IEnumerable<Call>> GetCallsBySpec(ISpecification<Call> specification)

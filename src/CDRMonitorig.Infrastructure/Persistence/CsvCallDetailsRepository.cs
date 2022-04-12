@@ -27,7 +27,6 @@ namespace CDRMonitorig.Infrastructure.Persistence
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
         }
 
-
         public async Task<IEnumerable<Call>> GetAll()
         {
             if (_isCacheActual && _cachedValues != null) return _cachedValues;
@@ -59,11 +58,6 @@ namespace CDRMonitorig.Infrastructure.Persistence
             }
 
             return calls;
-        }
-
-        public Task<TotalInformation> GetTotalInformation()
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Call>> GetCallsBySpec(ISpecification<Call> specification)

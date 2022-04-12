@@ -1,6 +1,6 @@
 ﻿namespace CDRMonitorig.Domain.ValueObjects
 {
-    public class PhoneNumber : ValueObject
+    public sealed class PhoneNumber : ValueObject
     {
         private PhoneNumber(string number)
         {

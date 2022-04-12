@@ -6,8 +6,6 @@ namespace CDRMonitorig.Domain
     {
         Task<IEnumerable<Call>> GetAll();
 
-        Task<TotalInformation> GetTotalInformation();
-
         Task<IEnumerable<Call>> GetCallsBySpec(ISpecification<Call> specification);
     }
 }
