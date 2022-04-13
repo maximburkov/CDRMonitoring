@@ -5,12 +5,14 @@ namespace CDRMonitorig.Domain.Rules.DialedSameNumber
 {
     public class DialedSameNumberReport : IMultilineReport<DialedSameNumberReportItem>
     {
-        public DialedSameNumberReport(IEnumerable<DialedSameNumberReportItem> items)
+        public DialedSameNumberReport(IEnumerable<DialedSameNumberReportItem> items, IRule<DialedSameNumberReport> rule)
         {
             Items = items;
+            Title = rule.Description;
         }
 
         public IEnumerable<DialedSameNumberReportItem> Items { get; }
+        public string Title { get; }
     }
 
     public class DialedSameNumberReportItem

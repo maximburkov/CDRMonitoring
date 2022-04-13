@@ -18,7 +18,9 @@ namespace CDRMonitorig.Domain.Rules.DialedSameNumber
                     Count = group.Count()
                 });
 
-            return new DialedSameNumberReport(records);
+            return new DialedSameNumberReport(records, this);
         }
+
+        public string Description { get; } = $"Number dialed more than {Threshold} times";
     }
 }

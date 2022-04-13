@@ -19,7 +19,9 @@ namespace CDRMonitorig.Domain.Rules.FromSameCaller
                     Count = group.Count()
                 });
 
-            return new FromSameCallerReport(records);
+            return new FromSameCallerReport(records, this);
         }
+
+        public string Description { get; } = $"CLI used more than {Threshold} times";
     }
 }

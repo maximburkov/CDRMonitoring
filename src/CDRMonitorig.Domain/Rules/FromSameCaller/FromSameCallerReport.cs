@@ -5,12 +5,14 @@ namespace CDRMonitorig.Domain.Rules.FromSameCaller
 {
     public class FromSameCallerReport : IMultilineReport<FromSameCallerReportItem>
     {
-        public FromSameCallerReport(IEnumerable<FromSameCallerReportItem> items)
+        public FromSameCallerReport(IEnumerable<FromSameCallerReportItem> items, IRule<FromSameCallerReport> rule)
         {
             Items = items;
+            Title = rule.Description;
         }
 
         public IEnumerable<FromSameCallerReportItem> Items { get; }
+        public string Title { get; }
     }
 
     public class FromSameCallerReportItem

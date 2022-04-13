@@ -9,6 +9,9 @@ namespace CDRMonitorig.Console.Extensions
         {
             var sb = new StringBuilder();
 
+            sb.AppendLine($"report.Title:");
+            sb.AppendLine();
+
             foreach (var item in report.Items)
             {
                 sb.AppendLine(item?.ToString());

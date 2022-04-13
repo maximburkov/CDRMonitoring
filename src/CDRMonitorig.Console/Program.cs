@@ -37,8 +37,9 @@ app.AddCommand("info", async ([Argument]string filename,
 
     var info = await callDetailsService.GetTotalInformation();
 
+    Console.WriteLine("Total Information:\n");
     Console.WriteLine($"Calls: {info.Count}");
-    Console.WriteLine($"Duration: {info.Duration.TotalMinutes}");
+    Console.WriteLine($"Duration: {(int)info.Duration.TotalMinutes}");
     Console.WriteLine($"Cost: {Math.Round(info.Cost, 2)}");
 });
 
@@ -52,6 +53,7 @@ app.AddSubCommand("check", x =>
 
         var rule = new DialedSameNumberRule();
         var report = await callDetailsService.GetReportForRule(rule);
+
         report.ToConsoleOutput();
     });
 
@@ -63,6 +65,7 @@ app.AddSubCommand("check", x =>
 
         var rule = new FromSameCallerRule();
         var report = await callDetailsService.GetReportForRule(rule);
+
         report.ToConsoleOutput();
     });
 });

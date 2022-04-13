@@ -2,7 +2,7 @@
   "profiles": {
     "CDRMonitorig.Console": {
       "commandName": "Project",
-      "commandLineArgs": "info \"C:\\Users\\Maxim\\Desktop\\Test task\\Invalid.csv\""
+      "commandLineArgs": "info \"sample_data.csv\""
     }
   }
 }
