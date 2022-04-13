@@ -8,7 +8,6 @@ namespace CDRMonitorig.Infrastructure.Persistence.Converters
     {
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            // TODO: check if we need FromMinutes.
             return TimeSpan.FromSeconds(double.Parse(text));
         }
     }
