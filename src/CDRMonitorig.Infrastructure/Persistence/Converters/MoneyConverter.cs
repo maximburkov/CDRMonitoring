@@ -15,7 +15,7 @@ namespace CDRMonitorig.Infrastructure.Persistence.Converters
             {
                 "GRB" => Currency.Gbp,
                 "USD" => Currency.Usd,
-                "EUR" => Currency.Gbp,
+                "EUR" => Currency.Eur,
                 _ => throw new InvalidOperationException($"Incorrect currency: {currencyString}")
             };
 

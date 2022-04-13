@@ -5,6 +5,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace CDRMonitorig.Infrastructure.Persistence
 {
@@ -14,6 +15,7 @@ namespace CDRMonitorig.Infrastructure.Persistence
         private bool _isCacheActual = false;
         private List<Call>? _cachedValues = null;
         private readonly FileService _fileService;
+        private readonly ILogger<CsvCallDetailsRepository> _logger;
 
         private readonly CsvConfiguration _configuration = new(CultureInfo.InvariantCulture)
         {
@@ -21,10 +23,11 @@ namespace CDRMonitorig.Infrastructure.Persistence
             Delimiter = "," 
         };
 
-        public CsvCallDetailsRepository(FileService fileService, bool useCache = true)
+        public CsvCallDetailsRepository(FileService fileService, ILogger<CsvCallDetailsRepository> logger, bool useCache = true)
         {
             _useCache = useCache;
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<IEnumerable<Call>> GetAll()
@@ -45,9 +48,15 @@ namespace CDRMonitorig.Infrastructure.Persistence
                 csv.Context.RegisterClassMap<CallByNameMap>();
                 calls = csv.GetRecords<Call>().Where(call => call is not null).ToList();
             }
+            catch (ReaderException ex)
+            {
+                var innerMessage = ex.InnerException?.Message;
+                _logger.LogError("Unable to parse data from file: {innerMessage}. \nFull error: {Message}",
+                    innerMessage, ex.Message);
+            }
             catch (Exception ex)
             {
-                //TODO: handle csv exceptions.
+                _logger.LogError("Error during reading file. {Message}", ex.Message);
             }
 
             if (_useCache)
@@ -80,6 +89,8 @@ namespace CDRMonitorig.Infrastructure.Persistence
 
                 calls = groups.SelectMany(i => i);
             }
+
+            // Specification could be extended with another methods.
 
             return calls;
         }
